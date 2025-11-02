@@ -10,19 +10,42 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState<GameScreenType>('intro');
 
   useEffect(() => {
-    // Инициализация аудио при первом взаимодействии
+    // Инициализация аудио при первом взаимодействии (включая мобильные touch события)
     const initAudio = () => {
       audioManager.init();
+      
+      // Разблокировка audio context для iOS
+      if (typeof window !== 'undefined') {
+        const unlockAudio = () => {
+          const AudioContext = (window as any).AudioContext || (window as any).webkitAudioContext;
+          if (AudioContext) {
+            const audioContext = new AudioContext();
+            audioContext.resume().then(() => {
+              console.log('Audio context unlocked for mobile');
+            }).catch((err: unknown) => {
+              console.warn('Audio context unlock failed:', err);
+            });
+          }
+        };
+        unlockAudio();
+      }
+      
       window.removeEventListener('click', initAudio);
       window.removeEventListener('keydown', initAudio);
+      window.removeEventListener('touchstart', initAudio);
+      window.removeEventListener('touchend', initAudio);
     };
 
-    window.addEventListener('click', initAudio);
-    window.addEventListener('keydown', initAudio);
+    window.addEventListener('click', initAudio, { passive: true });
+    window.addEventListener('keydown', initAudio, { passive: true });
+    window.addEventListener('touchstart', initAudio, { passive: true });
+    window.addEventListener('touchend', initAudio, { passive: true });
 
     return () => {
       window.removeEventListener('click', initAudio);
       window.removeEventListener('keydown', initAudio);
+      window.removeEventListener('touchstart', initAudio);
+      window.removeEventListener('touchend', initAudio);
     };
   }, []);
 

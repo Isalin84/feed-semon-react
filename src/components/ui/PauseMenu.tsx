@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
-import { Play, Home, Volume2, VolumeX } from 'lucide-react';
+import { Play, Home, Volume2, VolumeX, Maximize, Minimize } from 'lucide-react';
 import { useState } from 'react';
 import { audioManager } from '../../utils/audioManager';
+import { useFullscreen } from '../../hooks/useFullscreen';
 
 interface PauseMenuProps {
   onResume: () => void;
@@ -10,6 +11,7 @@ interface PauseMenuProps {
 
 export const PauseMenu: React.FC<PauseMenuProps> = ({ onResume, onMenu }) => {
   const [isMuted, setIsMuted] = useState(false);
+  const { isFullscreen, toggleFullscreen, isSupported } = useFullscreen();
 
   const handleToggleMute = () => {
     if (isMuted) {
@@ -69,6 +71,18 @@ export const PauseMenu: React.FC<PauseMenuProps> = ({ onResume, onMenu }) => {
             {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
             {isMuted ? 'Включить звук' : 'Выключить звук'}
           </motion.button>
+
+          {isSupported && (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleFullscreen}
+              className="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
+              {isFullscreen ? 'Выйти из полноэкранного' : 'Полноэкранный режим'}
+            </motion.button>
+          )}
 
           <motion.button
             whileHover={{ scale: 1.05 }}

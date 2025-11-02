@@ -103,12 +103,15 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete }) => {
                   ref={videoRef}
                   className="w-full h-full object-contain"
                   playsInline
+                  webkit-playsinline="true"
+                  x5-playsinline="true"
+                  preload="metadata"
                   onLoadedData={handleLoadedData}
                   onEnded={handleVideoEnd}
                   onError={handleError}
-                  preload="metadata"
                 >
                   <source src={`${import.meta.env.BASE_URL}assets/videos/intro_video.mp4`} type="video/mp4" />
+                  Ваш браузер не поддерживает видео.
                 </video>
 
                 {/* Play overlay */}

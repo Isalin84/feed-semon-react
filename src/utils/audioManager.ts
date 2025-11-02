@@ -13,6 +13,25 @@ class AudioManager {
   init() {
     if (this.initialized) return;
     
+    // iOS Audio unlock workaround - создаем временный звук для разблокировки
+    if (typeof window !== 'undefined') {
+      try {
+        const unlockHowler = () => {
+          const dummySound = new Howl({
+            src: ['data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAAABmYWN0BAAAAAAAAABkYXRhAAAAAA=='],
+            volume: 0,
+          });
+          dummySound.play();
+          setTimeout(() => {
+            dummySound.unload();
+          }, 100);
+        };
+        unlockHowler();
+      } catch (error) {
+        console.warn('iOS audio unlock failed:', error);
+      }
+    }
+    
     const baseUrl = import.meta.env.BASE_URL;
     const soundFiles = {
       catch: `${baseUrl}assets/sounds/catch.mp3`,
