@@ -92,6 +92,27 @@ class AudioManager {
     this.isMusicPlaying = true;
   }
 
+  forceUnlock() {
+    // Явная разблокировка аудио для мобильных устройств
+    if (!this.initialized) this.init();
+    
+    console.log('Force unlocking audio for mobile...');
+    
+    // Проигрываем и сразу останавливаем все звуки для разблокировки
+    this.sounds.forEach((sound) => {
+      const id = sound.play();
+      sound.stop(id);
+    });
+    
+    // Также разблокируем музыку
+    if (this.music) {
+      const musicId = this.music.play();
+      this.music.pause(musicId);
+    }
+    
+    console.log('Audio unlocked successfully!');
+  }
+
   pauseMusic() {
     this.music?.pause();
     this.isMusicPlaying = false;

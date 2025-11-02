@@ -1,11 +1,20 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Sparkles, ShieldAlert } from 'lucide-react';
+import { Play, Sparkles, ShieldAlert, Volume2 } from 'lucide-react';
+import { audioManager } from '../../utils/audioManager';
 
 interface MainMenuProps {
   onStart: () => void;
 }
 
 export const MainMenu: React.FC<MainMenuProps> = ({ onStart }) => {
+  const [audioUnlocked, setAudioUnlocked] = useState(false);
+
+  const handleUnlockAudio = () => {
+    audioManager.forceUnlock();
+    audioManager.playMusic();
+    setAudioUnlocked(true);
+  };
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -172,6 +181,19 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onStart }) => {
               <span className="font-bold text-green-600">3 уровня</span>!
             </p>
             
+            {/* Кнопка включения звука для мобильных */}
+            {!audioUnlocked && (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleUnlockAudio}
+                className="md:hidden w-full mb-4 px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-lg font-bold rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                <Volume2 className="w-5 h-5" />
+                🔊 Включить звук
+              </motion.button>
+            )}
+
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Star, Home, Download, Share2 } from 'lucide-react';
-import { exportToImage, copyToClipboard } from '../../utils/shareImage';
+import { exportToImage, shareViaWebAPI } from '../../utils/shareImage';
 import { NameInputModal } from './NameInputModal';
 import { VictoryExportView } from './VictoryExportView';
 
@@ -35,7 +35,7 @@ export const Victory: React.FC<VictoryProps> = ({ score, onMenu }) => {
         if (exportAction === 'download') {
           await exportToImage('victory-export', `semon-victory-${name}-${score}.png`);
         } else if (exportAction === 'share') {
-          await copyToClipboard('victory-export');
+          await shareViaWebAPI('victory-export', `semon-victory-${name}-${score}.png`, score);
         }
       } catch (error) {
         console.error('Export failed:', error);

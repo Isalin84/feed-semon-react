@@ -92,6 +92,106 @@ export const exportToImage = async (elementId: string, filename: string = 'victo
 };
 
 /**
+ * Поделиться изображением через Web Share API (для мобильных)
+ */
+export const shareViaWebAPI = async (elementId: string, filename: string, score: number) => {
+  try {
+    const element = document.getElementById(elementId);
+    if (!element) {
+      console.error('Element not found:', elementId);
+      alert('Элемент не найден. Попробуйте ещё раз.');
+      return;
+    }
+
+    console.log('Sharing element via Web Share API:', element);
+
+    // Временно делаем элемент видимым
+    const originalStyle = {
+      opacity: element.style.opacity,
+      zIndex: element.style.zIndex,
+    };
+    
+    element.style.opacity = '1';
+    element.style.zIndex = '9999';
+
+    // Ждём загрузки всех изображений
+    await waitForImages(element);
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    const html2canvas = (await import('html2canvas')).default;
+    const canvas = await html2canvas(element, {
+      backgroundColor: '#FFFEF5',
+      scale: 2,
+      logging: false,
+      useCORS: true,
+      allowTaint: false,
+      width: 600,
+      windowWidth: 600,
+    });
+
+    // Возвращаем стили
+    element.style.opacity = originalStyle.opacity;
+    element.style.zIndex = originalStyle.zIndex;
+
+    console.log('Canvas created for sharing:', canvas.width, 'x', canvas.height);
+
+    canvas.toBlob(async (blob) => {
+      if (!blob) {
+        alert('Не удалось создать изображение.');
+        return;
+      }
+
+      try {
+        const file = new File([blob], filename, { type: 'image/png' });
+        
+        // Проверяем поддержку Web Share API
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+          console.log('Using Web Share API');
+          await navigator.share({
+            files: [file],
+            title: 'Накорми Семёна - Победа!',
+            text: `Я набрал ${score} очков в игре "Накорми Семёна"! 🎮🐹`,
+          });
+          console.log('Shared successfully!');
+        } else {
+          // Fallback - обычное скачивание
+          console.log('Web Share API not supported, using download fallback');
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          setTimeout(() => URL.revokeObjectURL(url), 100);
+          alert('💾 Изображение сохранено!\n\nТеперь его можно найти в загрузках.');
+        }
+      } catch (err) {
+        console.error('Failed to share:', err);
+        // Если пользователь отменил или произошла ошибка - fallback на скачивание
+        if ((err as Error).name === 'AbortError') {
+          console.log('User cancelled the share');
+        } else {
+          alert('⚠️ Не удалось поделиться.\nСохраняю изображение...');
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          setTimeout(() => URL.revokeObjectURL(url), 100);
+        }
+      }
+    }, 'image/png');
+
+  } catch (error) {
+    console.error('Failed to share image:', error);
+    alert('Ошибка при создании изображения:\n' + (error instanceof Error ? error.message : 'Неизвестная ошибка'));
+  }
+};
+
+/**
  * Копирование изображения в буфер обмена
  */
 export const copyToClipboard = async (elementId: string) => {
