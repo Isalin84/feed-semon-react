@@ -108,7 +108,7 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete }) => {
                   onError={handleError}
                   preload="metadata"
                 >
-                  <source src="/assets/videos/intro_video.mp4" type="video/mp4" />
+                  <source src={`${import.meta.env.BASE_URL}assets/videos/intro_video.mp4`} type="video/mp4" />
                 </video>
 
                 {/* Play overlay */}
@@ -143,7 +143,7 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete }) => {
               /* Fallback if video fails */
               <div className="bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl p-8 mb-6 text-center">
                 <img 
-                  src="/assets/images/semon_speech_welcome.png" 
+                  src={`${import.meta.env.BASE_URL}assets/images/semon_speech_welcome.png`}
                   alt="Семён приветствует" 
                   className="w-64 h-auto mx-auto mb-4 drop-shadow-lg"
                 />

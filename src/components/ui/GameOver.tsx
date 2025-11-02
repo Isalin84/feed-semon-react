@@ -27,7 +27,7 @@ export const GameOver: React.FC<GameOverProps> = ({ score, level, onRestart, onM
           transition={{ delay: 0.2, type: 'spring' }}
         >
           <img 
-            src="/assets/images/semon_speech_lose.png" 
+            src={`${import.meta.env.BASE_URL}assets/images/semon_speech_lose.png`}
             alt="Семён грустит" 
             className="w-72 h-auto mx-auto mb-4 drop-shadow-2xl"
           />

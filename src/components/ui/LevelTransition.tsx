@@ -9,9 +9,10 @@ interface LevelTransitionProps {
 
 export const LevelTransition: React.FC<LevelTransitionProps> = ({ level, fact }) => {
   // Выбираем изображение Семёна в зависимости от уровня
+  const baseUrl = import.meta.env.BASE_URL;
   const semonImage = level === 2 
-    ? '/assets/images/semon_speech_level2.png'
-    : '/assets/images/semon_speech_level3.png';
+    ? `${baseUrl}assets/images/semon_speech_level2.png`
+    : `${baseUrl}assets/images/semon_speech_level3.png`;
 
   return (
     <motion.div

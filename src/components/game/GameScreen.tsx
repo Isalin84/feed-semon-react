@@ -61,13 +61,14 @@ export const GameScreen: React.FC<GameScreenProps> = ({ onBackToMenu }) => {
     });
 
     // Load player image
+    const baseUrl = import.meta.env.BASE_URL;
     const player = new Image();
-    player.src = '/assets/images/semion.png';
+    player.src = `${baseUrl}assets/images/semion.png`;
     setPlayerImage(player);
 
     // Load background
     const bg = new Image();
-    bg.src = '/assets/images/background.png';
+    bg.src = `${baseUrl}assets/images/background.png`;
     setBackgroundImage(bg);
 
     setImages(loadedImages);

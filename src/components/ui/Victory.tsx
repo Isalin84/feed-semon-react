@@ -109,7 +109,7 @@ export const Victory: React.FC<VictoryProps> = ({ score, onMenu }) => {
           className="relative z-10"
         >
           <img 
-            src="/assets/images/semon_speech_win.png" 
+            src={`${import.meta.env.BASE_URL}assets/images/semon_speech_win.png`}
             alt="Семён радуется" 
             className="w-72 h-auto mx-auto mb-4 drop-shadow-2xl"
           />

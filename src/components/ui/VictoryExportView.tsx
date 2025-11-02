@@ -43,7 +43,7 @@ export const VictoryExportView: React.FC<VictoryExportViewProps> = ({ playerName
         {/* Hamster image */}
         <div style={{ marginBottom: '24px' }}>
           <img 
-            src="/assets/images/semon_speech_win.png" 
+            src={`${import.meta.env.BASE_URL}assets/images/semon_speech_win.png`}
             alt="Семён радуется"
             crossOrigin="anonymous"
             style={{

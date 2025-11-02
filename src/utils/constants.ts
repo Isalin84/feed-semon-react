@@ -48,13 +48,15 @@ export const SPAWN_PROBABILITIES = {
   BAD: 1.0,
 };
 
+const baseUrl = import.meta.env.BASE_URL;
+
 export const OBJECT_IMAGES: Record<string, string> = {
-  dill: '/assets/images/dill.png',
-  carrot: '/assets/images/carrot.png',
-  zucchini: '/assets/images/zucchini.png',
-  pepper: '/assets/images/pepper.png',
-  heart: '/assets/images/heart_bonus.png',
-  stone: '/assets/images/stone.png',
-  chocolate: '/assets/images/chocolate.png',
+  dill: `${baseUrl}assets/images/dill.png`,
+  carrot: `${baseUrl}assets/images/carrot.png`,
+  zucchini: `${baseUrl}assets/images/zucchini.png`,
+  pepper: `${baseUrl}assets/images/pepper.png`,
+  heart: `${baseUrl}assets/images/heart_bonus.png`,
+  stone: `${baseUrl}assets/images/stone.png`,
+  chocolate: `${baseUrl}assets/images/chocolate.png`,
 };
 

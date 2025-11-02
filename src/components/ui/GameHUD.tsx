@@ -22,7 +22,7 @@ export const GameHUD: React.FC<GameHUDProps> = ({ gameState }) => {
             {/* Score */}
             <div className="flex items-center gap-2">
               <div className="p-2 bg-yellow-100 rounded-lg">
-                <img src="/assets/images/icon_star.png" alt="⭐" className="w-6 h-6" />
+                <img src={`${import.meta.env.BASE_URL}assets/images/icon_star.png`} alt="⭐" className="w-6 h-6" />
               </div>
               <div>
                 <p className="text-xs text-gray-500 font-medium">Очки</p>
@@ -33,7 +33,7 @@ export const GameHUD: React.FC<GameHUDProps> = ({ gameState }) => {
             {/* Lives */}
             <div className="flex items-center gap-2">
               <div className="p-2 bg-red-100 rounded-lg">
-                <img src="/assets/images/icon_heart.png" alt="❤️" className="w-6 h-6" />
+                <img src={`${import.meta.env.BASE_URL}assets/images/icon_heart.png`} alt="❤️" className="w-6 h-6" />
               </div>
               <div>
                 <p className="text-xs text-gray-500 font-medium">Жизни</p>

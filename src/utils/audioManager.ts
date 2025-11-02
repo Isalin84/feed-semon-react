@@ -13,16 +13,17 @@ class AudioManager {
   init() {
     if (this.initialized) return;
     
+    const baseUrl = import.meta.env.BASE_URL;
     const soundFiles = {
-      catch: '/assets/sounds/catch.mp3',
-      miss: '/assets/sounds/miss.mp3',
-      gameOver: '/assets/sounds/game_over.mp3',
-      win: '/assets/sounds/win.mp3',
-      bonus: '/assets/sounds/bonus.mp3',
-      combo: '/assets/sounds/combo.mp3',
-      badObject: '/assets/sounds/bad_object.mp3',
-      healthRestore: '/assets/sounds/health_restore.mp3',
-      funFact: '/assets/sounds/fun_fact.mp3',
+      catch: `${baseUrl}assets/sounds/catch.mp3`,
+      miss: `${baseUrl}assets/sounds/miss.mp3`,
+      gameOver: `${baseUrl}assets/sounds/game_over.mp3`,
+      win: `${baseUrl}assets/sounds/win.mp3`,
+      bonus: `${baseUrl}assets/sounds/bonus.mp3`,
+      combo: `${baseUrl}assets/sounds/combo.mp3`,
+      badObject: `${baseUrl}assets/sounds/bad_object.mp3`,
+      healthRestore: `${baseUrl}assets/sounds/health_restore.mp3`,
+      funFact: `${baseUrl}assets/sounds/fun_fact.mp3`,
     };
 
     Object.entries(soundFiles).forEach(([key, src]) => {
@@ -39,7 +40,7 @@ class AudioManager {
 
     try {
       this.music = new Howl({
-        src: ['/assets/sounds/background_music.mp3'],
+        src: [`${baseUrl}assets/sounds/background_music.mp3`],
         loop: true,
         volume: 0.3,
         preload: true

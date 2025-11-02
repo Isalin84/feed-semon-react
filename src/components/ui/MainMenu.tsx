@@ -88,10 +88,10 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onStart }) => {
             <div className="flex items-center gap-3 text-gray-700 bg-blue-50/50 rounded-xl p-4">
               <div className="flex gap-2">
                 <div className="p-2 bg-white rounded-lg shadow-sm">
-                  <img src="/assets/images/arrow_left.png" alt="←" className="w-8 h-8" />
+                  <img src={`${import.meta.env.BASE_URL}assets/images/arrow_left.png`} alt="←" className="w-8 h-8" />
                 </div>
                 <div className="p-2 bg-white rounded-lg shadow-sm">
-                  <img src="/assets/images/arrow_right.png" alt="→" className="w-8 h-8" />
+                  <img src={`${import.meta.env.BASE_URL}assets/images/arrow_right.png`} alt="→" className="w-8 h-8" />
                 </div>
               </div>
               <span className="font-medium">Стрелки или касание экрана</span>
@@ -102,25 +102,25 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onStart }) => {
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
               <div className="p-2 bg-green-100 rounded-lg">
-                <img src="/assets/images/icon_dill_small.png" alt="🌿" className="w-6 h-6" />
+                <img src={`${import.meta.env.BASE_URL}assets/images/icon_dill_small.png`} alt="🌿" className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-green-600">Полезные овощи</h3>
             </div>
             <div className="grid grid-cols-3 gap-3">
               <VegetableCard
-                icon="/assets/images/icon_dill_small.png"
+                icon={`${import.meta.env.BASE_URL}assets/images/icon_dill_small.png`}
                 name="Укроп"
                 points="+5"
                 color="green"
               />
               <VegetableCard
-                icon="/assets/images/icon_carrot_small.png"
+                icon={`${import.meta.env.BASE_URL}assets/images/icon_carrot_small.png`}
                 name="Морковь"
                 points="+2"
                 color="orange"
               />
               <VegetableCard
-                icon="/assets/images/icon_zucchini_small.png"
+                icon={`${import.meta.env.BASE_URL}assets/images/icon_zucchini_small.png`}
                 name="Кабачок"
                 points="+3"
                 color="emerald"
@@ -132,17 +132,17 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onStart }) => {
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
               <div className="p-2 bg-orange-100 rounded-lg">
-                <img src="/assets/images/icon_star.png" alt="⭐" className="w-6 h-6" />
+                <img src={`${import.meta.env.BASE_URL}assets/images/icon_star.png`} alt="⭐" className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-orange-600">Бонусы</h3>
             </div>
             <div className="bg-orange-50/50 rounded-xl p-4 text-gray-700">
               <div className="flex items-center gap-2 font-medium">
-                <img src="/assets/images/pepper.png" alt="Перец" className="w-10 h-10" />
+                <img src={`${import.meta.env.BASE_URL}assets/images/pepper.png`} alt="Перец" className="w-10 h-10" />
                 <span className="text-orange-600 font-bold">Перец</span> (комбо x2) +10
               </div>
               <div className="flex items-center gap-2 font-medium mt-2">
-                <img src="/assets/images/heart_bonus.png" alt="Сердце" className="w-10 h-10" />
+                <img src={`${import.meta.env.BASE_URL}assets/images/heart_bonus.png`} alt="Сердце" className="w-10 h-10" />
                 <span className="text-red-600 font-bold">Сердце</span> +1 жизнь
               </div>
             </div>
@@ -158,9 +158,9 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onStart }) => {
             </div>
             <div className="bg-red-50/50 rounded-xl p-4 text-gray-700 border-2 border-red-200">
               <div className="flex items-center justify-center gap-3">
-                <img src="/assets/images/stone.png" alt="Камень" className="w-12 h-12" />
+                <img src={`${import.meta.env.BASE_URL}assets/images/stone.png`} alt="Камень" className="w-12 h-12" />
                 <p className="font-bold text-red-600">Камни и Шоколад — Избегайте их!</p>
-                <img src="/assets/images/chocolate.png" alt="Шоколад" className="w-12 h-12" />
+                <img src={`${import.meta.env.BASE_URL}assets/images/chocolate.png`} alt="Шоколад" className="w-12 h-12" />
               </div>
             </div>
           </div>
