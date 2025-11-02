@@ -10,7 +10,20 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Определяем мобильное устройство
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+      const isSmallScreen = window.innerWidth < 768;
+      return isMobileDevice || isSmallScreen;
+    };
+    
+    setIsMobile(checkMobile());
+  }, []);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -117,7 +130,7 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete }) => {
                   playsInline
                   webkit-playsinline="true"
                   x5-playsinline="true"
-                  muted
+                  muted={isMobile}
                   preload="auto"
                   onCanPlay={() => console.log('Video can play now')}
                   onLoadedData={handleLoadedData}
