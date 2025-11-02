@@ -50,7 +50,8 @@ class AudioManager {
         this.sounds.set(key, new Howl({ 
           src: [src], 
           volume: 0.4,
-          preload: true 
+          preload: false,
+          html5: true
         }));
       } catch (error) {
         console.warn(`Failed to load sound: ${key}`, error);
@@ -62,7 +63,8 @@ class AudioManager {
         src: [`${baseUrl}assets/sounds/background_music.mp3`],
         loop: true,
         volume: 0.3,
-        preload: true
+        preload: false,
+        html5: true
       });
     } catch (error) {
       console.warn('Failed to load background music', error);
@@ -96,21 +98,23 @@ class AudioManager {
     // Явная разблокировка аудио для мобильных устройств
     if (!this.initialized) this.init();
     
-    console.log('Force unlocking audio for mobile...');
+    console.log('Force unlocking and loading audio for mobile...');
     
-    // Проигрываем и сразу останавливаем все звуки для разблокировки
+    // Загружаем все звуки ПОСЛЕ user interaction (iOS требует это)
     this.sounds.forEach((sound) => {
+      sound.load(); // Явная загрузка
       const id = sound.play();
       sound.stop(id);
     });
     
-    // Также разблокируем музыку
+    // Также загружаем и разблокируем музыку
     if (this.music) {
+      this.music.load(); // Явная загрузка музыки
       const musicId = this.music.play();
       this.music.pause(musicId);
     }
     
-    console.log('Audio unlocked successfully!');
+    console.log('Audio unlocked and loaded successfully!');
   }
 
   pauseMusic() {

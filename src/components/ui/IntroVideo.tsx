@@ -30,14 +30,14 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete }) => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [isPlaying, videoLoaded]);
 
-  // Timeout для загрузки видео (5 секунд)
+  // Timeout для загрузки видео (15 секунд для iOS и медленного интернета)
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (!videoLoaded && !videoError) {
-        console.warn('Video loading timeout, showing fallback');
+        console.warn('Video loading timeout (15s), showing fallback');
         setVideoError(true);
       }
-    }, 5000); // 5 секунд на загрузку
+    }, 15000); // 15 секунд для медленного интернета и iOS
     
     return () => clearTimeout(timeout);
   }, [videoLoaded, videoError]);
@@ -117,7 +117,9 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete }) => {
                   playsInline
                   webkit-playsinline="true"
                   x5-playsinline="true"
-                  preload="metadata"
+                  muted
+                  preload="auto"
+                  onCanPlay={() => console.log('Video can play now')}
                   onLoadedData={handleLoadedData}
                   onEnded={handleVideoEnd}
                   onError={handleError}

@@ -9,11 +9,20 @@ interface MainMenuProps {
 
 export const MainMenu: React.FC<MainMenuProps> = ({ onStart }) => {
   const [audioUnlocked, setAudioUnlocked] = useState(false);
+  const [audioLoading, setAudioLoading] = useState(false);
 
-  const handleUnlockAudio = () => {
-    audioManager.forceUnlock();
-    audioManager.playMusic();
-    setAudioUnlocked(true);
+  const handleUnlockAudio = async () => {
+    setAudioLoading(true);
+    try {
+      await audioManager.forceUnlock();
+      await audioManager.playMusic();
+      setAudioUnlocked(true);
+    } catch (error) {
+      console.error('Audio unlock failed:', error);
+      alert('Не удалось включить звук. Попробуйте ещё раз.');
+    } finally {
+      setAudioLoading(false);
+    }
   };
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -184,13 +193,14 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onStart }) => {
             {/* Кнопка включения звука для мобильных */}
             {!audioUnlocked && (
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: audioLoading ? 1 : 1.05 }}
+                whileTap={{ scale: audioLoading ? 1 : 0.95 }}
                 onClick={handleUnlockAudio}
-                className="md:hidden w-full mb-4 px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-lg font-bold rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                disabled={audioLoading}
+                className="md:hidden w-full mb-4 px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-lg font-bold rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Volume2 className="w-5 h-5" />
-                🔊 Включить звук
+                {audioLoading ? '⏳ Загрузка...' : '🔊 Включить звук'}
               </motion.button>
             )}
 
