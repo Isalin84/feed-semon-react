@@ -79,31 +79,31 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+        className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overflow-y-auto"
       >
         {/* Modal container */}
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="relative bg-gradient-to-br from-amber-50 to-orange-100 rounded-2xl shadow-2xl max-w-4xl w-full overflow-hidden border-4 border-amber-400"
+          className="relative bg-gradient-to-br from-amber-50 to-orange-100 rounded-2xl shadow-2xl max-w-4xl w-full overflow-hidden border-2 sm:border-4 border-amber-400 my-auto"
         >
           {/* Close button */}
           <button
             onClick={handleSkip}
-            className="absolute top-4 right-4 z-10 p-2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-colors duration-200 group"
+            className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 p-2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-colors duration-200 group"
             title="Пропустить (ESC)"
           >
-            <X className="w-6 h-6 text-gray-700 group-hover:text-red-600" />
+            <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:text-red-600" />
           </button>
 
-          <div className="p-8">
+          <div className="p-4 sm:p-8">
             {/* Header */}
-            <div className="text-center mb-6">
-              <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-500 mb-2">
+            <div className="text-center mb-4 sm:mb-6">
+              <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-500 mb-2">
                 🐹 Привет от Семёна!
               </h2>
-              <p className="text-gray-600">
+              <p className="text-sm sm:text-base text-gray-600">
                 Узнай правила игры перед стартом
               </p>
             </div>

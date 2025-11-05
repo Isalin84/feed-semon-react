@@ -3,8 +3,28 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    overflow: hidden;
+    height: 100%;
+  }
+
   body {
-    @apply bg-gradient-to-br from-amber-50 to-orange-100 min-h-screen;
+    @apply bg-gradient-to-br from-amber-50 to-orange-100;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Улучшение для iOS Safari - предотвращение bounce эффекта */
+  body.ios {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 }
 
