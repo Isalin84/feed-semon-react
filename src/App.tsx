@@ -64,16 +64,16 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="w-full h-screen overflow-hidden">
       <AnimatePresence mode="wait">
         {currentScreen === 'intro' && (
           <IntroVideo key="intro" onComplete={handleIntroComplete} />
         )}
-        
+
         {currentScreen === 'menu' && (
           <MainMenu key="menu" onStart={handleStartGame} />
         )}
-        
+
         {currentScreen === 'playing' && (
           <GameScreen key="game" onBackToMenu={handleBackToMenu} />
         )}

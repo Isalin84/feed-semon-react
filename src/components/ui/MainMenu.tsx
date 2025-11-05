@@ -44,7 +44,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onStart }) => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-amber-100 via-orange-50 to-yellow-100">
+    <div className="w-full h-screen relative overflow-y-auto overflow-x-hidden bg-gradient-to-br from-amber-100 via-orange-50 to-yellow-100">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div

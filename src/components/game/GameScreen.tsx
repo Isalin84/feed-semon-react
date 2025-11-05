@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Pause } from 'lucide-react';
+import { Pause, Maximize2 } from 'lucide-react';
 import { GameHUD } from '../ui/GameHUD';
 import { GameOver } from '../ui/GameOver';
 import { Victory } from '../ui/Victory';
@@ -11,6 +11,8 @@ import { GAME_CONFIG, OBJECT_CONFIGS, SPAWN_PROBABILITIES, OBJECT_IMAGES, COLORS
 import { checkCollision } from '../../utils/collision';
 import { getRandomFact } from '../../utils/educationalFacts';
 import { audioManager } from '../../utils/audioManager';
+import { useCanvasSize } from '../../hooks/useCanvasSize';
+import { useFullscreen } from '../../hooks/useFullscreen';
 
 interface GameScreenProps {
   onBackToMenu: () => void;
@@ -18,6 +20,8 @@ interface GameScreenProps {
 
 export const GameScreen: React.FC<GameScreenProps> = ({ onBackToMenu }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasSize = useCanvasSize();
+  const { isFullscreen, toggleFullscreen, isSupported: isFullscreenSupported } = useFullscreen();
   const [gameState, setGameState] = useState<GameState>({
     score: 0,
     lives: GAME_CONFIG.INITIAL_LIVES,
@@ -478,32 +482,56 @@ export const GameScreen: React.FC<GameScreenProps> = ({ onBackToMenu }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center p-2 sm:p-4">
       <div className="relative">
         <canvas
           ref={canvasRef}
-          width={GAME_CONFIG.CANVAS_WIDTH}
-          height={GAME_CONFIG.CANVAS_HEIGHT}
-          className="border-4 border-amber-600 rounded-lg shadow-2xl max-w-full h-auto"
-          style={{ touchAction: 'none' }}
+          width={canvasSize.width}
+          height={canvasSize.height}
+          className="border-4 border-amber-600 rounded-lg shadow-2xl"
+          style={{
+            touchAction: 'none',
+            width: `${canvasSize.displayWidth}px`,
+            height: `${canvasSize.displayHeight}px`,
+            maxWidth: '100%',
+            imageRendering: 'pixelated',
+          }}
         />
         
         {gameState.isPlaying && !gameState.gameOver && !gameState.victory && !isPaused && (
           <>
             <GameHUD gameState={gameState} />
-            
-            {/* Pause button */}
-            <motion.button
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={togglePause}
-              className="absolute top-4 right-4 z-30 p-3 bg-white/90 hover:bg-white backdrop-blur-sm rounded-xl shadow-lg transition-all duration-200 border border-gray-200"
-              title="Пауза (P или ESC)"
-            >
-              <Pause className="w-6 h-6 text-gray-700" />
-            </motion.button>
+
+            {/* Control buttons */}
+            <div className="absolute top-2 right-2 md:top-4 md:right-4 z-30 flex gap-2">
+              {/* Fullscreen button - только для мобильных */}
+              {isFullscreenSupported && (
+                <motion.button
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={toggleFullscreen}
+                  className="md:hidden p-2 md:p-3 bg-white/90 hover:bg-white backdrop-blur-sm rounded-xl shadow-lg transition-all duration-200 border border-gray-200"
+                  title={isFullscreen ? "Выход из полноэкранного режима" : "Полноэкранный режим"}
+                >
+                  <Maximize2 className={`w-5 h-5 md:w-6 md:h-6 ${isFullscreen ? 'text-blue-600' : 'text-gray-700'}`} />
+                </motion.button>
+              )}
+
+              {/* Pause button */}
+              <motion.button
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={togglePause}
+                className="p-2 md:p-3 bg-white/90 hover:bg-white backdrop-blur-sm rounded-xl shadow-lg transition-all duration-200 border border-gray-200"
+                title="Пауза (P или ESC)"
+              >
+                <Pause className="w-5 h-5 md:w-6 md:h-6 text-gray-700" />
+              </motion.button>
+            </div>
           </>
         )}
 
